@@ -79,8 +79,9 @@ const useProviderNaviGate = ({ onCancel, onConfirm, onNavigate }: NaviGateHookPr
   const [openDialog, setOpenDialog] = useState(false);
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const [nextLocation, setNextLocation] = useState<Location | null>(null);
+  const { push } = useHistory();
 
-  const navigateTo = onNavigate || useHistory().push;
+  const navigateTo = onNavigate || push;
 
   const handleConfirm = (event: MouseEvent) => {
     if (onConfirm) onConfirm(event, nextLocation);
@@ -99,6 +100,7 @@ const useProviderNaviGate = ({ onCancel, onConfirm, onNavigate }: NaviGateHookPr
   useEffect(() => {
     if (confirmedNavigation && nextLocation) {
       navigateTo(nextLocation.pathname);
+      setConfirmedNavigation(false);
     }
   }, [confirmedNavigation, nextLocation]);
 
