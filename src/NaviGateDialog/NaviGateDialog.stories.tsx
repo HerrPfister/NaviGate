@@ -49,3 +49,63 @@ export default {
     },
   }
 };
+
+export const NaviGateDisableDialogActionSpacing: Story<NaviGateDialogProps> = () =>
+  <NaviGateDialog
+    DialogActionsProps={{ disableSpacing: true }}
+    onCancel={() => { }}
+    onConfirm={() => { }}
+    open={true}
+  />
+
+NaviGateDisableDialogActionSpacing.storyName = "Disable Actions Spacing";
+
+export const NaviGateDisableDialogTitleTypography: Story<NaviGateDialogProps> = () =>
+  <NaviGateDialog
+    DialogTitleProps={{ disableTypography: true }}
+    onCancel={() => { }}
+    onConfirm={() => { }}
+    open={true}
+  />;
+
+NaviGateDisableDialogTitleTypography.storyName = "Disable Title Typography";
+
+export const NaviGateEnableDialogContentDividers: Story<NaviGateDialogProps> = () =>
+  <NaviGateDialog
+    DialogContentProps={{ dividers: true }}
+    onCancel={() => { }}
+    onConfirm={() => { }}
+    open={true}
+  />
+
+NaviGateEnableDialogContentDividers.storyName = "Enable Content Dividers";
+
+export const NaviGateDialogPaperVariantOutlined: Story<NaviGateDialogProps> = () =>
+  <NaviGateDialog
+    PaperProps={{ variant: 'outlined' }}
+    onCancel={() => { }}
+    onConfirm={() => { }}
+    open={true}
+  />;
+
+NaviGateDialogPaperVariantOutlined.storyName = "Outlined Paper Content";
+
+export const NaviGateDialogPaperNoElevation: Story<NaviGateDialogProps> = () =>
+  <NaviGateDialog
+    PaperProps={{ elevation: 0 }}
+    onCancel={() => { }}
+    onConfirm={() => { }}
+    open={true}
+  />;
+
+NaviGateDialogPaperNoElevation.storyName = "Paper Content No Elevation";
+
+export const NaviGateDialogPaperSquare: Story<NaviGateDialogProps> = () =>
+  <NaviGateDialog
+    PaperProps={{ square: true }}
+    onCancel={() => { }}
+    onConfirm={() => { }}
+    open={true}
+  />;
+
+NaviGateDialogPaperSquare.storyName = "Paper Content Square";
