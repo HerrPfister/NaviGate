@@ -1,2 +1,1 @@
-export * from './useNaviGate';
-export { default } from './useNaviGate';
+export * from './NaviGate';

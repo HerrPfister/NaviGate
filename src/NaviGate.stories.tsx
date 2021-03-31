@@ -2,7 +2,7 @@ import React from 'react';
 import { Story } from '@storybook/react';
 import { MemoryRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
-import { NaviGateProvider, NaviGateProviderProps } from './useNaviGate';
+import { NaviGateProvider, NaviGateProviderProps } from './NaviGate';
 
 const Template: Story<NaviGateProviderProps> = (props) => (
   <Router initialEntries={['/']}>
@@ -24,6 +24,20 @@ const Template: Story<NaviGateProviderProps> = (props) => (
 export const Playground: Story<NaviGateProviderProps> = Template.bind({});
 
 export default {
-  title: 'NaviGate',
+  title: 'Demo/NaviGate',
   component: Playground,
+  parameters: {
+    options: {
+      showPanel: false,
+    },
+    docs: {
+      page: null,
+    },
+    controls: {
+      disabled: true,
+    },
+    actions: {
+      disabled: true,
+    },
+  }
 };
