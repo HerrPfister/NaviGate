@@ -79,10 +79,13 @@ const useProviderNaviGate = ({ onCancel, onConfirm, onNavigate }: NaviGateHookPr
   const [openDialog, setOpenDialog] = useState(false);
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const [nextLocation, setNextLocation] = useState<Location | null>(null);
+
   const { push } = useHistory();
-
   const navigateTo = onNavigate || push;
-
+  
+  const updateNextLocation = (next: Location) => setNextLocation(next);
+  const updateOpenDialog = (open: boolean) => setOpenDialog(open);
+  
   const handleConfirm = (event: MouseEvent) => {
     if (onConfirm) onConfirm(event, nextLocation);
 
@@ -109,7 +112,7 @@ const useProviderNaviGate = ({ onCancel, onConfirm, onNavigate }: NaviGateHookPr
     handleCancel,
     handleConfirm,
     openDialog,
-    updateNextLocation: (next: Location) => setNextLocation(next),
-    updateOpenDialog: (open: boolean) => setOpenDialog(open),
+    updateNextLocation,
+    updateOpenDialog,
   };
 };
