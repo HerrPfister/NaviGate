@@ -36,5 +36,5 @@ export default {
     actions: {
       disabled: true,
     },
-  }
+  },
 };

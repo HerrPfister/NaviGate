@@ -3,7 +3,7 @@ import { Story } from '@storybook/react';
 
 import { NaviGateDialog, NaviGateDialogProps } from './NaviGateDialog';
 
-const Template: Story<NaviGateDialogProps> = ({ open, ...props }) => {
+const Template: Story<NaviGateDialogProps> = ({ open, ...props }: NaviGateDialogProps) => {
   const [isOpen, setIsOpen] = useState(open);
 
   const handleCancel = () => setIsOpen(false);
@@ -15,7 +15,7 @@ const Template: Story<NaviGateDialogProps> = ({ open, ...props }) => {
       <NaviGateDialog {...props} onCancel={handleCancel} onConfirm={handleConfirm} open={isOpen} />
     </div>
   );
-}
+};
 
 export const Playground: Story<NaviGateDialogProps> = Template.bind({});
 
@@ -47,65 +47,41 @@ export default {
     options: {
       showPanel: true,
     },
-  }
+  },
 };
 
-export const NaviGateDisableDialogActionSpacing: Story<NaviGateDialogProps> = () =>
-  <NaviGateDialog
-    DialogActionsProps={{ disableSpacing: true }}
-    onCancel={() => { }}
-    onConfirm={() => { }}
-    open={true}
-  />
+export const NaviGateDisableDialogActionSpacing: Story<NaviGateDialogProps> = () => (
+  <NaviGateDialog DialogActionsProps={{ disableSpacing: true }} onCancel={() => {}} onConfirm={() => {}} open={true} />
+);
 
-NaviGateDisableDialogActionSpacing.storyName = "Disable Actions Spacing";
+NaviGateDisableDialogActionSpacing.storyName = 'Disable Actions Spacing';
 
-export const NaviGateDisableDialogTitleTypography: Story<NaviGateDialogProps> = () =>
-  <NaviGateDialog
-    DialogTitleProps={{ disableTypography: true }}
-    onCancel={() => { }}
-    onConfirm={() => { }}
-    open={true}
-  />;
+export const NaviGateDisableDialogTitleTypography: Story<NaviGateDialogProps> = () => (
+  <NaviGateDialog DialogTitleProps={{ disableTypography: true }} onCancel={() => {}} onConfirm={() => {}} open={true} />
+);
 
-NaviGateDisableDialogTitleTypography.storyName = "Disable Title Typography";
+NaviGateDisableDialogTitleTypography.storyName = 'Disable Title Typography';
 
-export const NaviGateEnableDialogContentDividers: Story<NaviGateDialogProps> = () =>
-  <NaviGateDialog
-    DialogContentProps={{ dividers: true }}
-    onCancel={() => { }}
-    onConfirm={() => { }}
-    open={true}
-  />
+export const NaviGateEnableDialogContentDividers: Story<NaviGateDialogProps> = () => (
+  <NaviGateDialog DialogContentProps={{ dividers: true }} onCancel={() => {}} onConfirm={() => {}} open={true} />
+);
 
-NaviGateEnableDialogContentDividers.storyName = "Enable Content Dividers";
+NaviGateEnableDialogContentDividers.storyName = 'Enable Content Dividers';
 
-export const NaviGateDialogPaperVariantOutlined: Story<NaviGateDialogProps> = () =>
-  <NaviGateDialog
-    PaperProps={{ variant: 'outlined' }}
-    onCancel={() => { }}
-    onConfirm={() => { }}
-    open={true}
-  />;
+export const NaviGateDialogPaperVariantOutlined: Story<NaviGateDialogProps> = () => (
+  <NaviGateDialog PaperProps={{ variant: 'outlined' }} onCancel={() => {}} onConfirm={() => {}} open={true} />
+);
 
-NaviGateDialogPaperVariantOutlined.storyName = "Outlined Paper Content";
+NaviGateDialogPaperVariantOutlined.storyName = 'Outlined Paper Content';
 
-export const NaviGateDialogPaperNoElevation: Story<NaviGateDialogProps> = () =>
-  <NaviGateDialog
-    PaperProps={{ elevation: 0 }}
-    onCancel={() => { }}
-    onConfirm={() => { }}
-    open={true}
-  />;
+export const NaviGateDialogPaperNoElevation: Story<NaviGateDialogProps> = () => (
+  <NaviGateDialog PaperProps={{ elevation: 0 }} onCancel={() => {}} onConfirm={() => {}} open={true} />
+);
 
-NaviGateDialogPaperNoElevation.storyName = "Paper Content No Elevation";
+NaviGateDialogPaperNoElevation.storyName = 'Paper Content No Elevation';
 
-export const NaviGateDialogPaperSquare: Story<NaviGateDialogProps> = () =>
-  <NaviGateDialog
-    PaperProps={{ square: true }}
-    onCancel={() => { }}
-    onConfirm={() => { }}
-    open={true}
-  />;
+export const NaviGateDialogPaperSquare: Story<NaviGateDialogProps> = () => (
+  <NaviGateDialog PaperProps={{ square: true }} onCancel={() => {}} onConfirm={() => {}} open={true} />
+);
 
-NaviGateDialogPaperSquare.storyName = "Paper Content Square";
+NaviGateDialogPaperSquare.storyName = 'Paper Content Square';

@@ -10,10 +10,7 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "prettier/@typescript-eslint",
-    "prettier/react",
-    "plugin:testing-library/recommended"
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -23,10 +20,9 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": ["react", "@typescript-eslint", "testing-library"],
+  "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "testing-library/no-debug": "error",
-    "testing-library/prefer-screen-queries": "warn"
+    "@typescript-eslint/no-empty-function": 0
   },
   "settings": {
     "react": {

@@ -1,4 +1,13 @@
-import React, { createContext, MouseEventHandler, MouseEvent, ReactNode, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  MouseEventHandler,
+  MouseEvent,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+  ReactElement,
+} from 'react';
 import { Prompt, useHistory } from 'react-router-dom';
 import { Location } from 'history';
 
@@ -34,7 +43,7 @@ export const NaviGateProvider = ({
   onCancel,
   onConfirm,
   onNavigate,
-}: NaviGateProviderProps) => {
+}: NaviGateProviderProps): ReactElement => {
   const context = useProviderNaviGate({ onCancel, onConfirm, onNavigate });
 
   const {
@@ -73,7 +82,7 @@ export const NaviGateProvider = ({
   );
 };
 
-export const useNaviGate = () => useContext(NaviGateContext);
+export const useNaviGate = (): NaviGateContextType => useContext(NaviGateContext);
 
 const useProviderNaviGate = ({ onCancel, onConfirm, onNavigate }: NaviGateHookProps): NaviGateContextType => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -82,10 +91,10 @@ const useProviderNaviGate = ({ onCancel, onConfirm, onNavigate }: NaviGateHookPr
 
   const { push } = useHistory();
   const navigateTo = onNavigate || push;
-  
+
   const updateNextLocation = (next: Location) => setNextLocation(next);
   const updateOpenDialog = (open: boolean) => setOpenDialog(open);
-  
+
   const handleConfirm = (event: MouseEvent) => {
     if (onConfirm) onConfirm(event, nextLocation);
 
