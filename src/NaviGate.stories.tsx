@@ -30,9 +30,6 @@ export default {
     options: {
       showPanel: false,
     },
-    docs: {
-      page: null,
-    },
     controls: {
       disabled: true,
     },
