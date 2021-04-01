@@ -4,7 +4,11 @@ A simple provider that blocks navigation with a full page confirmation dialog.
 
 > NOTE: This package relies on `react-router-dom`.
 
-## How to use?
+## How do I run it?
+
+After installing the dependencies. You can run the storybook server simply by running the `yarn storybook` or `npm run storybook` command.
+
+## How do I use it?
 
 All you need to do is wrap your application with the provider.
 
