@@ -39,9 +39,7 @@ const MyComponent = () => {
 };
 ```
 
-## Documentation
-
-**Provider Props**
+## Provider Props
 
 | prop              | type      | default | description                                                                  |
 | ----------------- | --------- | :-----: | ---------------------------------------------------------------------------- |
@@ -52,7 +50,7 @@ const MyComponent = () => {
 | onConfirm         | function  |    -    | Callback to call _after_ the modal is closed upon confirmation.              |
 | onNavigate        | function  |    -    | Callback to call _before_ the user is navigated.                             |
 
-**Dialog Props**
+## Dialog Props
 
 | prop                  | type      | default | description                                                                                  |
 | --------------------- | --------- | :-----: | -------------------------------------------------------------------------------------------- |
