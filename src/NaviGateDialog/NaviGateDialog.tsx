@@ -24,12 +24,14 @@ export type NaviGateDialogComponentProps = {
 };
 
 export type NaviGateDialogProps = {
+  id?: string;
   onCancel: MouseEventHandler;
   onConfirm: MouseEventHandler;
   open: boolean;
 } & NaviGateDialogComponentProps;
 
 export const NaviGateDialog = ({
+  id,
   DialogTitleProps,
   DialogContentProps,
   DialogActionsProps,
@@ -42,6 +44,11 @@ export const NaviGateDialog = ({
   PaperProps,
   ...props
 }: NaviGateDialogProps): JSX.Element => {
+  const dialogId = id || 'navi-gate-dialog';
+  const dialogContentId = `${dialogId}-content`;
+  const dialogTitleId = `${dialogId}-title`;
+  const dialogActionsId = `${dialogId}-actions`;
+
   const DialogPaper = (props: PaperProps) => <Paper {...props} {...PaperProps} />;
 
   const Content = useMemo(
@@ -72,10 +79,23 @@ export const NaviGateDialog = ({
   );
 
   return (
-    <Dialog {...props} open={open} onClose={onCancel} PaperComponent={DialogPaper}>
-      <DialogTitle {...DialogTitleProps}>{Title}</DialogTitle>
-      <DialogContent {...DialogContentProps}>{Content}</DialogContent>
-      <DialogActions {...DialogActionsProps}>{Actions}</DialogActions>
+    <Dialog
+      {...props}
+      aria-labelledby={dialogTitleId}
+      aria-describedby={dialogContentId}
+      open={open}
+      onClose={onCancel}
+      PaperComponent={DialogPaper}
+    >
+      <DialogTitle {...DialogTitleProps} id={dialogTitleId}>
+        {Title}
+      </DialogTitle>
+      <DialogContent {...DialogContentProps} id={dialogContentId} data-testid={dialogContentId}>
+        {Content}
+      </DialogContent>
+      <DialogActions {...DialogActionsProps} id={dialogActionsId} data-testid={dialogActionsId}>
+        {Actions}
+      </DialogActions>
     </Dialog>
   );
 };

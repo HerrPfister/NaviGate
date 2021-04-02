@@ -31,6 +31,7 @@
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.1.0",
     "chance": "^1.1.7",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
@@ -50,12 +51,55 @@
   },
   "scripts": {
     "build": "tsc -p ./tsconfig.build.json",
-    "build:watch": "tsc --watch",
     "postbuild": "copyfiles -u 1 \"src/**/*.{woff,woff2,eot}\" lib",
-    "start": "yarn build:watch",
     "clean": "rm -rf ./lib ./.build-cache ./storybook-static",
-    "storybook": "start-storybook -p 6006",
-    "build:storybook": "build-storybook --quiet",
-    "lint": "eslint ./src"
+    "start": "start-storybook -p 6006",
+    "lint": "eslint ./src",
+    "test": "jest"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src/"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest-setup.js"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.stories.{js,jsx,ts,tsx}"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/lib/",
+      "/build/"
+    ],
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "resetMocks": true,
+    "verbose": true,
+    "coverageDirectory": "<rootDir>/coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 75,
+        "functions": 75,
+        "lines": 75,
+        "statements": 75
+      }
+    },
+    "coverageReporters": [
+      "lcov",
+      "cobertura",
+      "clover",
+      "json"
+    ],
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/coverage/"
+    ]
   }
 }

@@ -6,7 +6,7 @@ A simple provider that blocks navigation with a full page confirmation dialog.
 
 ## How do I run it?
 
-After installing the dependencies. You can run the storybook server simply by running the `yarn storybook` or `npm run storybook` command.
+After installing the dependencies. You can run the storybook server simply by running the `yarn start` or `npm start` command.
 
 ## How do I use it?
 
