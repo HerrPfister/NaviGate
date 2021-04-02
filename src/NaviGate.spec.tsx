@@ -42,17 +42,15 @@ describe('NaviGateProvider', () => {
     );
 
     const header = screen.getByRole('heading', { name: givenHeader });
-    let prompt = screen.queryByRole('presentation');
-
-    expect(prompt).not.toBeInTheDocument();
     expect(header).toBeInTheDocument();
+    
+    let prompt = screen.queryByRole('presentation');
+    expect(prompt).not.toBeInTheDocument();
 
     const link = screen.getByRole('link', { name: 'go' });
-
     userEvent.click(link);
 
     prompt = screen.getByRole('presentation');
-
     expect(prompt).toBeInTheDocument();
   });
 
@@ -77,12 +75,6 @@ describe('NaviGateProvider', () => {
       </MemoryRouter>,
     );
 
-    const header = screen.getByRole('heading', { name: givenHeader });
-    const prompt = screen.queryByRole('presentation');
-
-    expect(prompt).not.toBeInTheDocument();
-    expect(header).toBeInTheDocument();
-
     const link = screen.getByRole('link', { name: 'go' });
     userEvent.click(link);
 
@@ -90,7 +82,6 @@ describe('NaviGateProvider', () => {
     userEvent.click(confirmBtn);
 
     const newPageHeader = screen.getByRole('heading', { name: expectedHeader });
-
     expect(newPageHeader).toBeInTheDocument();
   });
 
@@ -115,12 +106,6 @@ describe('NaviGateProvider', () => {
       </MemoryRouter>,
     );
 
-    const header = screen.getByRole('heading', { name: givenHeader });
-    const prompt = screen.queryByRole('presentation');
-
-    expect(prompt).not.toBeInTheDocument();
-    expect(header).toBeInTheDocument();
-
     const link = screen.getByRole('link', { name: 'go' });
     userEvent.click(link);
 
@@ -128,7 +113,87 @@ describe('NaviGateProvider', () => {
     userEvent.click(cancelBtn);
 
     const newPageHeader = screen.queryByRole('heading', { name: expectedHeader });
-
     expect(newPageHeader).not.toBeInTheDocument();
+  });
+
+  it('should pass event to passed in callback when user clicks confirm in prompt', () => {
+    const givenRoute = `/${chance.word()}`;
+    const givenHeader = chance.word();
+    const mockedConfirm = jest.fn();
+
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Switch>
+          <Route exact path="/">
+            <NaviGateProvider onConfirm={mockedConfirm}>
+              <h1>{givenHeader}</h1>
+              <Link to={givenRoute}>go</Link>
+            </NaviGateProvider>
+          </Route>
+        </Switch>
+      </MemoryRouter>,
+    );
+
+    const link = screen.getByRole('link', { name: 'go' });
+    userEvent.click(link);
+
+    const confirmBtn = screen.getByRole('button', { name: 'confirm-action' });
+    userEvent.click(confirmBtn);
+
+    expect(mockedConfirm).toHaveBeenCalled();
+  });
+
+  it('should pass event to passed in callback when user clicks cancel in prompt', () => {
+    const givenRoute = `/${chance.word()}`;
+    const givenHeader = chance.word();
+    const mockedCancel = jest.fn();
+
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Switch>
+          <Route exact path="/">
+            <NaviGateProvider onCancel={mockedCancel}>
+              <h1>{givenHeader}</h1>
+              <Link to={givenRoute}>go</Link>
+            </NaviGateProvider>
+          </Route>
+        </Switch>
+      </MemoryRouter>,
+    );
+
+    const link = screen.getByRole('link', { name: 'go' });
+    userEvent.click(link);
+
+    const cancelBtn = screen.getByRole('button', { name: 'cancel-action' });
+    userEvent.click(cancelBtn);
+
+    expect(mockedCancel).toHaveBeenCalled();
+  });
+
+  it('should not show prompt if additional blocking condition is false', () => {
+    const givenRoute = `/${chance.word()}`;
+    const givenHeader = chance.word();
+
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Switch>
+          <Route exact path="/">
+            <NaviGateProvider blockingCondition={false}>
+              <h1>{givenHeader}</h1>
+              <Link to={givenRoute}>go</Link>
+            </NaviGateProvider>
+          </Route>
+        </Switch>
+      </MemoryRouter>,
+    );
+
+    let prompt = screen.queryByRole('presentation');
+    expect(prompt).not.toBeInTheDocument();
+
+    const link = screen.getByRole('link', { name: 'go' });
+    userEvent.click(link);
+
+    prompt = screen.queryByRole('presentation');
+    expect(prompt).not.toBeInTheDocument();
   });
 });
