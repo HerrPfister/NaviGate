@@ -36,6 +36,8 @@ export type NaviGateContextType = {
 
 export const NaviGateContext = createContext<NaviGateContextType>({} as NaviGateContextType);
 
+export const useNaviGate = (): NaviGateContextType => useContext(NaviGateContext);
+
 export const NaviGateProvider = ({
   blockingCondition,
   children,
@@ -71,18 +73,18 @@ export const NaviGateProvider = ({
     return true;
   };
 
+  const dialog = openDialog ? (
+    <NaviGateDialog {...DialogProps} open={openDialog} onCancel={handleCancel} onConfirm={handleConfirm} />
+  ) : null;
+
   return (
     <NaviGateContext.Provider value={context}>
       <Prompt when={true} message={handleBlockedNavigation} />
-      {openDialog ? (
-        <NaviGateDialog {...DialogProps} open={openDialog} onCancel={handleCancel} onConfirm={handleConfirm} />
-      ) : null}
       {children}
+      {dialog}
     </NaviGateContext.Provider>
   );
 };
-
-export const useNaviGate = (): NaviGateContextType => useContext(NaviGateContext);
 
 const useProviderNaviGate = ({ onCancel, onConfirm, onNavigate }: NaviGateHookProps): NaviGateContextType => {
   const [openDialog, setOpenDialog] = useState(false);
