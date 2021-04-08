@@ -12,11 +12,13 @@ module.exports = {
     filename: 'example.bundle.js',
   },
   devServer: {
+    historyApiFallback: true,
     contentBase: path.resolve(__dirname, 'public'),
     port: 3000,
     compress: true,
     hot: true,
     publicPath: '/',
+    open: true,
   },
   module: {
     rules: [
