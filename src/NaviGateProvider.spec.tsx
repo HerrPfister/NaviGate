@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import Chance from 'chance';
 
-import { NaviGateProvider } from './NaviGate';
+import { NaviGateProvider } from './NaviGateProvider';
 
 const chance = new Chance();
 
@@ -43,7 +43,7 @@ describe('NaviGateProvider', () => {
 
     const header = screen.getByRole('heading', { name: givenHeader });
     expect(header).toBeInTheDocument();
-    
+
     let prompt = screen.queryByRole('presentation');
     expect(prompt).not.toBeInTheDocument();
 
