@@ -1,9 +1,20 @@
 {
-  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "noEmit": true,
+    "strict": true,
+    "target": "ES5",
+    "module": "ESNEXT",
+    "moduleResolution": "node",
+    "lib": ["ES6", "DOM", "DOM.Iterable"],
     "baseUrl": ".",
-    "rootDir": "."
+    "outDir": "dist/_types",
+    "declaration": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "jsx": "react",
   },
   "exclude": ["node_modules"]
 }
