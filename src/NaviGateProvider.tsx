@@ -1,7 +1,7 @@
 import React, {
   createContext,
-  MouseEventHandler,
   MouseEvent,
+  MouseEventHandler,
   ReactNode,
   useContext,
   useEffect,
@@ -13,7 +13,7 @@ import { Location } from 'history';
 
 import { NaviGateDialog, NaviGateDialogComponentProps } from './NaviGateDialog';
 
-export type NaviGateHookProps = {
+export type getProviderContextProps = {
   onCancel?: (event: MouseEvent) => void;
   onConfirm?: (event: MouseEvent, next?: Location | null) => void;
   onNavigate?: (path: string) => void;
@@ -23,7 +23,7 @@ export type NaviGateProviderProps = {
   blockingCondition?: boolean;
   children?: ReactNode;
   DialogProps?: NaviGateDialogComponentProps;
-} & NaviGateHookProps;
+} & getProviderContextProps;
 
 export type NaviGateContextType = {
   confirmedNavigation: boolean;
@@ -34,59 +34,7 @@ export type NaviGateContextType = {
   updateNextLocation: (next: Location) => void;
 };
 
-export const NaviGateContext = createContext<NaviGateContextType>({} as NaviGateContextType);
-
-export const useNaviGate = (): NaviGateContextType => useContext(NaviGateContext);
-
-export const NaviGateProvider = ({
-  blockingCondition,
-  children,
-  DialogProps,
-  onCancel,
-  onConfirm,
-  onNavigate,
-}: NaviGateProviderProps): ReactElement => {
-  const context = useProviderNaviGate({ onCancel, onConfirm, onNavigate });
-
-  const {
-    confirmedNavigation,
-    handleCancel,
-    handleConfirm,
-    openDialog,
-    updateNextLocation,
-    updateOpenDialog,
-  } = context;
-
-  const ignoreCondition = blockingCondition === undefined;
-  const shouldBlock = ignoreCondition || blockingCondition;
-
-  const handleBlockedNavigation = (nextLocation: Location): boolean => {
-    const notSameLocation = nextLocation?.pathname !== window.location.pathname;
-
-    if (notSameLocation && shouldBlock && !confirmedNavigation) {
-      updateOpenDialog(true);
-      updateNextLocation(nextLocation);
-
-      return false;
-    }
-
-    return true;
-  };
-
-  const dialog = openDialog ? (
-    <NaviGateDialog {...DialogProps} open={openDialog} onCancel={handleCancel} onConfirm={handleConfirm} />
-  ) : null;
-
-  return (
-    <NaviGateContext.Provider value={context}>
-      <Prompt when={true} message={handleBlockedNavigation} />
-      {children}
-      {dialog}
-    </NaviGateContext.Provider>
-  );
-};
-
-const useProviderNaviGate = ({ onCancel, onConfirm, onNavigate }: NaviGateHookProps): NaviGateContextType => {
+const getProviderContext = ({ onCancel, onConfirm, onNavigate }: getProviderContextProps): NaviGateContextType => {
   const [openDialog, setOpenDialog] = useState(false);
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const [nextLocation, setNextLocation] = useState<Location | null>(null);
@@ -126,4 +74,50 @@ const useProviderNaviGate = ({ onCancel, onConfirm, onNavigate }: NaviGateHookPr
     updateNextLocation,
     updateOpenDialog,
   };
+};
+
+export const NaviGateContext = createContext<NaviGateContextType>({} as NaviGateContextType);
+
+export const useNaviGate = (): NaviGateContextType => useContext(NaviGateContext);
+
+export const NaviGateProvider = ({
+  blockingCondition,
+  children,
+  DialogProps,
+  ...contextProps
+}: NaviGateProviderProps): ReactElement => {
+  const context = getProviderContext(contextProps);
+
+  const {
+    confirmedNavigation,
+    handleCancel,
+    handleConfirm,
+    openDialog,
+    updateNextLocation,
+    updateOpenDialog,
+  } = context;
+
+  const ignoreCondition = blockingCondition === undefined;
+  const shouldBlock = ignoreCondition || blockingCondition;
+
+  const handleBlockedNavigation = (nextLocation: Location): boolean => {
+    const notSameLocation = nextLocation?.pathname !== window.location.pathname;
+
+    if (notSameLocation && shouldBlock && !confirmedNavigation) {
+      updateOpenDialog(true);
+      updateNextLocation(nextLocation);
+
+      return false;
+    }
+
+    return true;
+  };
+
+  return (
+    <NaviGateContext.Provider value={context}>
+      <Prompt when={true} message={handleBlockedNavigation} />
+      {children}
+      <NaviGateDialog {...DialogProps} open={openDialog} onCancel={handleCancel} onConfirm={handleConfirm} />
+    </NaviGateContext.Provider>
+  );
 };

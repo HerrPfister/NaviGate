@@ -1,1 +1,1 @@
-export * from './NaviGate';
+export * from './NaviGateProvider';
