@@ -30,6 +30,8 @@ export type NaviGateDialogProps = {
   open: boolean;
 } & NaviGateDialogComponentProps;
 
+export const WARNING_MESSAGE = 'Are you sure you want to leave this screen? You will lose unsaved changes.';
+
 export const NaviGateDialog = ({
   id,
   DialogTitleProps,
@@ -51,15 +53,9 @@ export const NaviGateDialog = ({
 
   const DialogPaper = (props: PaperProps) => <Paper {...props} {...PaperProps} />;
 
-  const Content = useMemo(
-    () =>
-      NaviGateDialogContent || (
-        <DialogContentText>
-          Are you sure you want to leave this screen? You will lose unsaved changes.
-        </DialogContentText>
-      ),
-    [NaviGateDialogContent],
-  );
+  const Content = useMemo(() => NaviGateDialogContent || <DialogContentText>{WARNING_MESSAGE}</DialogContentText>, [
+    NaviGateDialogContent,
+  ]);
 
   const Title = useMemo(() => NaviGateDialogTitle || 'ARE YOU SURE?', [NaviGateDialogTitle]);
 

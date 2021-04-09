@@ -11,7 +11,7 @@ import React, {
 import { Prompt, useHistory } from 'react-router-dom';
 import { Location } from 'history';
 
-import { NaviGateDialog, NaviGateDialogComponentProps } from './NaviGateDialog';
+import { NaviGateDialog, NaviGateDialogComponentProps, WARNING_MESSAGE } from './NaviGateDialog';
 
 export type getProviderContextProps = {
   onCancel?: (event: MouseEvent) => void;
@@ -98,12 +98,13 @@ export const NaviGateProvider = ({
   } = context;
 
   const ignoreCondition = blockingCondition === undefined;
-  const shouldBlock = ignoreCondition || blockingCondition;
+  const blockingConditionMet = ignoreCondition || blockingCondition;
+  const shouldBlock = blockingConditionMet && !confirmedNavigation;
 
   const handleBlockedNavigation = (nextLocation: Location): boolean => {
     const notSameLocation = nextLocation?.pathname !== window.location.pathname;
 
-    if (notSameLocation && shouldBlock && !confirmedNavigation) {
+    if (notSameLocation && shouldBlock) {
       updateOpenDialog(true);
       updateNextLocation(nextLocation);
 
@@ -112,6 +113,14 @@ export const NaviGateProvider = ({
 
     return true;
   };
+
+  useEffect(() => {
+    window.onbeforeunload = () => false;
+
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, []);
 
   return (
     <NaviGateContext.Provider value={context}>
