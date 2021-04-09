@@ -11,7 +11,7 @@ import React, {
 import { Prompt, useHistory } from 'react-router-dom';
 import { Location } from 'history';
 
-import { NaviGateDialog, NaviGateDialogComponentProps, WARNING_MESSAGE } from './NaviGateDialog';
+import { NaviGateDialog, NaviGateDialogComponentProps } from './NaviGateDialog';
 
 export type getProviderContextProps = {
   onCancel?: (event: MouseEvent) => void;
