@@ -7,7 +7,9 @@ import {
   CardHeader,
   CardMedia,
   Collapse,
+  Container,
   IconButton,
+  makeStyles,
   Typography,
 } from '@material-ui/core';
 import { ThumbDownAlt as DislikeIcon, ThumbUpAlt as FavoriteIcon } from '@material-ui/icons';
@@ -18,7 +20,23 @@ type ViewExampleComponentProps = {
   state: AppState;
 };
 
+const useStyles = makeStyles(() => ({
+  card: {
+    maxWidth: 1024,
+    width: '100%',
+  },
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    height: '100vh',
+    alignItems: 'center',
+  },
+}));
+
 export const ViewExampleComponent = ({ state }: ViewExampleComponentProps): ReactElement => {
+  const classes = useStyles();
+
   const { firstName, lastName } = state;
 
   const [liked, setLiked] = useState(false);
@@ -38,7 +56,7 @@ export const ViewExampleComponent = ({ state }: ViewExampleComponentProps): Reac
 
   const fullName = `${firstName} ${lastName}`;
   const likeIconColor = !undecided && liked ? 'primary' : 'default';
-  const dislikeIconColor = !undecided && !liked ? 'primary' : 'default';
+  const dislikeIconColor = !undecided && !liked ? 'secondary' : 'default';
   const decisionImage = !undecided ? (
     <CardMedia
       height={window.screen.height * 0.6}
@@ -49,22 +67,24 @@ export const ViewExampleComponent = ({ state }: ViewExampleComponentProps): Reac
   ) : null;
 
   return (
-    <Card>
-      <CardHeader title={<Typography variant="h2">Hey there, {fullName}!</Typography>} />
-      <Collapse in={!undecided} unmountOnExit>
-        {decisionImage}
-      </Collapse>
-      <CardContent>
-        <Typography variant="body1">Are you liking what you see here?</Typography>
-      </CardContent>
-      <CardActions>
-        <IconButton aria-label="like" color={likeIconColor} onClick={handleLike}>
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="dislike" color={dislikeIconColor} onClick={handleDislike}>
-          <DislikeIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+    <Container className={classes.container} maxWidth="lg">
+      <Card className={classes.card}>
+        <CardHeader title={<Typography variant="h2">Hey there, {fullName}!</Typography>} />
+        <Collapse in={!undecided} unmountOnExit>
+          {decisionImage}
+        </Collapse>
+        <CardContent>
+          <Typography variant="body1">Are you liking what you see here?</Typography>
+        </CardContent>
+        <CardActions>
+          <IconButton aria-label="like" color={likeIconColor} onClick={handleLike}>
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="dislike" color={dislikeIconColor} onClick={handleDislike}>
+            <DislikeIcon />
+          </IconButton>
+        </CardActions>
+      </Card>
+    </Container>
   );
 };
